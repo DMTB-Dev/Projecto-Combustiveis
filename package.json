@@ -10,13 +10,32 @@
     "sync-prices": "npx tsx scripts/sync-prices.ts"
   },
   "dependencies": {
+    "@expo-google-fonts/plus-jakarta-sans": "^0.4.2",
+    "@react-native-async-storage/async-storage": "2.2.0",
+    "@react-native-community/slider": "5.1.2",
+    "@supabase/supabase-js": "^2.99.3",
     "expo": "~55.0.8",
+    "expo-constants": "~55.0.9",
+    "expo-font": "~55.0.4",
+    "expo-linking": "~55.0.8",
+    "expo-location": "~55.1.4",
+    "expo-router": "~55.0.7",
+    "expo-splash-screen": "~55.0.12",
     "expo-status-bar": "~55.0.4",
     "react": "19.2.0",
-    "react-native": "0.83.2"
+    "react-native": "0.83.2",
+    "react-native-chart-kit": "^6.12.0",
+    "react-native-gesture-handler": "~2.30.0",
+    "react-native-maps": "1.27.2",
+    "react-native-reanimated": "4.2.1",
+    "react-native-safe-area-context": "~5.6.2",
+    "react-native-screens": "~4.23.0",
+    "react-native-svg": "15.15.3",
+    "zustand": "^5.0.12"
   },
   "devDependencies": {
     "@types/react": "~19.2.2",
+    "tsx": "^4.21.0",
     "typescript": "~5.9.2"
   },
   "private": true
