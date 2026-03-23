@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
-import Slider from '@react-native-community/slider';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Platform } from 'react-native';
+// Slider doesn't support web — conditionally imported
+const SliderNative = Platform.OS !== 'web' ? require('@react-native-community/slider').default : null;
 import { TankCalculator } from '@/components/TankCalculator';
 import { FuelTypeSelector } from '@/components/FuelTypeSelector';
 import { BrandLogo } from '@/components/BrandLogo';
@@ -46,21 +47,39 @@ export default function CalculatorScreen() {
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Tamanho do depósito</Text>
         <Text style={styles.tankValue}>{tankSize} L</Text>
-        <Slider
-          style={styles.slider}
-          minimumValue={20}
-          maximumValue={200}
-          step={5}
-          value={tankSize}
-          onValueChange={setTankSize}
-          minimumTrackTintColor={Colors.primary}
-          maximumTrackTintColor={Colors.border}
-          thumbTintColor={Colors.primary}
-        />
-        <View style={styles.sliderLabels}>
-          <Text style={styles.sliderLabel}>20L</Text>
-          <Text style={styles.sliderLabel}>200L</Text>
-        </View>
+        {Platform.OS === 'web' ? (
+          <View style={styles.webSliderRow}>
+            {[30, 40, 50, 60, 70, 80, 100].map((size) => (
+              <TouchableOpacity
+                key={size}
+                style={[styles.frequencyPill, tankSize === size && styles.frequencyPillActive]}
+                onPress={() => setTankSize(size)}
+              >
+                <Text style={[styles.frequencyText, tankSize === size && styles.frequencyTextActive]}>
+                  {size}L
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        ) : (
+          <>
+            <SliderNative
+              style={styles.slider}
+              minimumValue={20}
+              maximumValue={200}
+              step={5}
+              value={tankSize}
+              onValueChange={setTankSize}
+              minimumTrackTintColor={Colors.primary}
+              maximumTrackTintColor={Colors.border}
+              thumbTintColor={Colors.primary}
+            />
+            <View style={styles.sliderLabels}>
+              <Text style={styles.sliderLabel}>20L</Text>
+              <Text style={styles.sliderLabel}>200L</Text>
+            </View>
+          </>
+        )}
       </View>
 
       {/* Fill-up frequency */}
@@ -223,6 +242,12 @@ const styles = StyleSheet.create({
   sliderLabel: {
     fontSize: FontSize.xs,
     color: Colors.textMuted,
+  },
+  webSliderRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: Spacing.sm,
+    justifyContent: 'center',
   },
   frequencyRow: {
     flexDirection: 'row',
